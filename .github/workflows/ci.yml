@@ -1,0 +1,26 @@
+name: CI
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: yarn install
+      - run: yarn test
+
+  release:
+    runs-on: ubuntu-latest
+    if: "{{ github.ref == 'refs/heads/master' }}"
+    steps:
+      - uses: actions/checkout@v2
+      - run: yarn install
+      - name: Semantic Release
+        run: yarn release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VSCE_TOKEN: ${{ secrets.VSCE_TOKEN }}

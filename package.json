@@ -1,0 +1,97 @@
+{
+	"name": "contextual-snips",
+	"displayName": "Contextual Snippets",
+	"description": "Take fine grain control of your snippets suggestions",
+	"version": "1.0.0",
+	"engines": {
+		"vscode": "^1.46.0"
+	},
+	"categories": [
+		"Other"
+	],
+	"activationEvents": [
+		"onStartupFinished"
+	],
+	"main": "./out/extension.js",
+	"contributes": {
+		"commands": [
+			{
+				"command": "contextual-snips.refresh",
+				"title": "Contextual Snippets: Refresh Snippets"
+			}
+		],
+		"configuration": {
+			"title": "General",
+			"properties": {
+				"contextual-snips.snippets-paths": {
+					"type": "array",
+					"default": [],
+					"description": "A list of folder paths to find Code snippets"
+				}
+			}
+		}
+	},
+	"scripts": {
+		"vscode:prepublish": "yarn run compile",
+		"compile": "tsc -p ./",
+		"lint": "eslint src --ext ts",
+		"lint:fix": "eslint src --ext ts --fix",
+		"watch": "tsc -watch -p ./",
+		"pretest": "yarn run compile && yarn run lint",
+		"test": "jest",
+		"release": "semantic-release",
+		"commit": "npx git-cz"
+	},
+	"devDependencies": {
+		"@types/fs-extra": "^9.0.1",
+		"@types/glob": "^7.1.1",
+		"@types/jest": "^26.0.3",
+		"@types/memoizee": "^0.4.4",
+		"@types/mock-fs": "^4.10.0",
+		"@types/node": "^13.11.0",
+		"@types/picomatch": "^2.2.1",
+		"@types/vscode": "^1.46.0",
+		"@typescript-eslint/eslint-plugin": "^2.26.0",
+		"@typescript-eslint/parser": "^2.26.0",
+		"cz-conventional-changelog": "3.2.0",
+		"eslint": "^6.8.0",
+		"eslint-config-prettier": "^6.11.0",
+		"eslint-plugin-prettier": "^3.1.4",
+		"glob": "^7.1.6",
+		"husky": "^4.2.5",
+		"jest": "^26.1.0",
+		"jest-mock-extended": "^1.0.9",
+		"lint-staged": "^10.2.11",
+		"mock-fs": "^4.12.0",
+		"prettier": "^2.0.5",
+		"semantic-release": "^17.1.1",
+		"semantic-release-vsce": "raix/semantic-release-vsce",
+		"ts-jest": "^26.1.1",
+		"typescript": "^3.8.3",
+		"vscode-test": "^1.3.0"
+	},
+	"dependencies": {
+		"fast-glob": "^3.2.4",
+		"fs-extra": "^9.0.1",
+		"memoizee": "^0.4.14",
+		"picomatch": "^2.2.2"
+	},
+	"release": {
+		"plugins": [
+			"@semantic-release/commit-analyzer",
+			"@semantic-release/release-notes-generator",
+			"@semantic-release/github",
+			"raix/semantic-release-vsce"
+		]
+	},
+	"husky": {
+		"hooks": {
+			"pre-commit": "yarn run test"
+		}
+	},
+	"config": {
+		"commitizen": {
+			"path": "./node_modules/cz-conventional-changelog"
+		}
+	}
+}
