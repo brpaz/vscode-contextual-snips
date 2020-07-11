@@ -8,7 +8,7 @@ const mockSnippets = [
     id: 'test-1',
     body: ['afterAll(() => {\n\t$0\n});'],
     description: 'afterAll function is called once after all specs',
-    prefix: 'jest afterall',
+    prefix: ['jest afterall'],
     scope: 'javascript,javascriptreact,typescript,typescriptreact',
     context: {
       patterns: ['**/*/*.spec.{ts,js}']
@@ -18,7 +18,7 @@ const mockSnippets = [
     id: 'test2',
     body: ['test'],
     description: 'test',
-    prefix: 'prefix',
+    prefix: ['prefix'],
     scope: 'php',
     context: {
       patterns: ['**/*/*.spec.{ts,js}']
@@ -31,7 +31,7 @@ beforeEach(() => {
 });
 
 describe('Snippets Provider', () => {
-  it('returns only snippets that match the document language', async () => {
+  it('returns only snippets that match the criteria', async () => {
     const provider = new SnippetsProvider(mockSnippets);
 
     const document = mock<vscode.TextDocument>({

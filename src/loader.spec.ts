@@ -24,7 +24,8 @@ beforeEach(() => {
   loader = new SnippetsLoader();
   mock({
     '/snippets': {
-      'test.json': JSON.stringify(testData)
+      'test.json': JSON.stringify(testData),
+      'parseerror.json': ''
     }
   });
 });
@@ -34,7 +35,7 @@ describe('Snippets Loader', () => {
     const snippets = await loader.load(['/snippets']);
     expect(snippets.length).toBe(2);
     expect(snippets[0].id).toBe('testsnippet');
-    expect(snippets[0].prefix).toBe('snip');
+    expect(snippets[0].prefix).toContain('snip');
     expect(snippets[0].description).toBe('some test snippet');
     expect(snippets[0].body).toContain('test');
     expect(snippets[0].context?.patterns?.includes("'.github/.workflows/.*.yaml'"));
@@ -48,6 +49,11 @@ describe('Snippets Loader', () => {
 
   it('loads empty files if snippet folder was not found', async () => {
     const snippets = await loader.load(['/not-existing-snippets']);
+    expect(snippets.length).toBe(0);
+  });
+
+  it('returns empty list if Snippet file is invalid', async () => {
+    const snippets = await loader.load(['/parseerror.json']);
     expect(snippets.length).toBe(0);
   });
 });

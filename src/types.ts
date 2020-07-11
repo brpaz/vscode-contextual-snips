@@ -1,6 +1,6 @@
 export interface Snippet {
   id: string;
-  prefix: string;
+  prefix: Array<string>;
   description: string;
   body: Array<string>;
   context?: SnippetContext;

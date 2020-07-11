@@ -31,7 +31,7 @@
 			}
 		],
 		"configuration": {
-			"title": "General",
+			"title": "Contextual Snippets",
 			"properties": {
 				"contextual-snips.snippets-paths": {
 					"type": "array",

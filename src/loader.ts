@@ -40,13 +40,22 @@ export default class SnipptsLoader {
 
       for (const key of keys) {
         const data = fileContents[key];
-        data['id'] = key;
 
-        if (data['scope'] == undefined) {
-          data['scope'] = 'plaintext';
+        let prefixes = new Array<string>();
+        if (Array.isArray(data['prefix'])) {
+          prefixes = data['prefix'];
+        } else {
+          prefixes = [data['prefix']];
         }
 
-        snippetData.push(data);
+        snippetData.push({
+          id: key,
+          scope: data['scope'] || 'plaintext',
+          body: data['body'],
+          description: data['description'],
+          context: data['context'] || {},
+          prefix: prefixes
+        });
       }
 
       return snippetData;
