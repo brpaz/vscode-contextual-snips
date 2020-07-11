@@ -4,6 +4,7 @@
 	"description": "Take fine grain control of your snippets suggestions",
 	"version": "1.0.0",
 	"publisher": "brpaz",
+	"icon": "icon.png",
 	"engines": {
 		"vscode": "^1.22.0"
 	},
@@ -48,6 +49,7 @@
 		"watch": "tsc -watch -p ./",
 		"pretest": "yarn run compile && yarn run lint",
 		"test": "jest",
+		"test:cover": "yarn run test --coverage",
 		"release": "semantic-release",
 		"commit": "npx git-cz"
 	},

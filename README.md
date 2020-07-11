@@ -1,12 +1,17 @@
 # Contextual Snippets Extension for VS Code
 
-> This extension provides an advanced way to control the display of custom snippet suggestions.
+> This extension provides an advanced way to control the display of custom snippet suggestions, (file pattern, presence of dependency, etc)
 
 [![CI Status](https://img.shields.io/github/workflow/status/brpaz/vscode-contextual-snips/CI?color=orange&label=actions&logo=github&logoColor=orange&style=for-the-badge)](https://github.com/brpaz/vscode-contextual-snips)
+[![Codecov Coverage](https://img.shields.io/codecov/c/github/brpaz/vscode-contextual-snips.svg?style=for-the-badge)](https://codecov.io/gh/brpaz/vscode-contextual-snips)
 [![Visual Studio Marketplace Version](https://img.shields.io/visual-studio-marketplace/v/brpaz.contextual-snips.svg?style=for-the-badge)](https://marketplace.visualstudio.com/items?itemName=contextual-snips)
 [![Visual Studio Marketplace Installs](https://img.shields.io/visual-studio-marketplace/i/brpaz.contextual-snips.svg?style=for-the-badge)](https://marketplace.visualstudio.com/items?itemName=brpaz.contextual-snips)
 [![Visual Studio Marketplace Rating](https://img.shields.io/visual-studio-marketplace/r/brpaz.contextual-snips.svg?style=for-the-badge)](https://marketplace.visualstudio.com/items?itemName=contextual-snips)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](LICENSE)
+
+## Demo
+
+![demo](demo.gif)
 
 ## Background
 
