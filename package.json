@@ -3,11 +3,17 @@
 	"displayName": "Contextual Snippets",
 	"description": "Take fine grain control of your snippets suggestions",
 	"version": "1.0.0",
+	"publisher": "brpaz",
 	"engines": {
-		"vscode": "^1.46.0"
+		"vscode": "^1.22.0"
 	},
 	"categories": [
-		"Other"
+		"Snippets"
+	],
+	"keywords": [
+		"snippets",
+		"context",
+		"patterns"
 	],
 	"activationEvents": [
 		"onStartupFinished"
