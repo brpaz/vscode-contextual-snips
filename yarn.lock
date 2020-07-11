@@ -893,10 +893,10 @@
   resolved "https://registry.yarnpkg.com/@types/stack-utils/-/stack-utils-1.0.1.tgz#0a851d3bd96498fa25c33ab7278ed3bd65f06c3e"
   integrity sha512-l42BggppR6zLmpfU6fq9HEa2oGPEI8yrSPL3GITjfRInppYFahObbIQOQK3UGxEnyQpltZLaPe75046NOZQikw==
 
-"@types/vscode@^1.46.0":
-  version "1.46.0"
-  resolved "https://registry.yarnpkg.com/@types/vscode/-/vscode-1.46.0.tgz#53f2075986e901ed25cd1ec5f3ffa5db84a111b3"
-  integrity sha512-8m9wPEB2mcRqTWNKs9A9Eqs8DrQZt0qNFO8GkxBOnyW6xR//3s77SoMgb/nY1ctzACsZXwZj3YRTDsn4bAoaUw==
+"@types/vscode@^1.22.0":
+  version "1.47.0"
+  resolved "https://registry.yarnpkg.com/@types/vscode/-/vscode-1.47.0.tgz#4a4051c21ecaadcf383a2c4387bea282540e96de"
+  integrity sha512-nJA37ykkz9FYA0ZOQUSc3OZnhuzEW2vUhUEo4MiduUo82jGwwcLfyvmgd/Q7b0WrZAAceojGhZybg319L24bTA==
 
 "@types/yargs-parser@*":
   version "15.0.0"
@@ -6955,9 +6955,10 @@ saxes@^5.0.0:
   dependencies:
     xmlchars "^2.2.0"
 
-semantic-release-vsce@raix/semantic-release-vsce:
-  version "0.0.0-development"
-  resolved "https://codeload.github.com/raix/semantic-release-vsce/tar.gz/529e667c3fed2a467b50c80e3328f1b952e7db27"
+semantic-release-vsce@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/semantic-release-vsce/-/semantic-release-vsce-3.0.1.tgz#fc7ff8863ed3dd913a3102b1cf0e68e62f94fa17"
+  integrity sha512-fbRw3cQx9CO9rDVTOmazQO2JCBweGFVRVO//E4xzgVEgQaHERVJJnWcR5t7jFjNzrJ/hfRytqqLNlxhbx3X+rQ==
   dependencies:
     "@semantic-release/error" "^2.2.0"
     commander "^4.1.1"
