@@ -2,7 +2,7 @@
 
 > This extension provides an advanced way to control the display of custom snippet suggestions.
 
-![CI Status](https://img.shields.io/github/workflow/status/brpaz/vscode-contextual-snippets/CI?color=orange&label=actions&logo=github&logoColor=orange&style=for-the-badge)](https://github.com/brpaz/vscode-contextual-snippets)
+[![CI Status](https://img.shields.io/github/workflow/status/brpaz/vscode-contextual-snips/CI?color=orange&label=actions&logo=github&logoColor=orange&style=for-the-badge)](https://github.com/brpaz/vscode-contextual-snips)
 [![Visual Studio Marketplace Version](https://img.shields.io/visual-studio-marketplace/v/brpaz.contextual-snips.svg?style=for-the-badge)](https://marketplace.visualstudio.com/items?itemName=contextual-snips)
 [![Visual Studio Marketplace Installs](https://img.shields.io/visual-studio-marketplace/i/brpaz.contextual-snips.svg?style=for-the-badge)](https://marketplace.visualstudio.com/items?itemName=brpaz.contextual-snips)
 [![Visual Studio Marketplace Rating](https://img.shields.io/visual-studio-marketplace/r/brpaz.contextual-snips.svg?style=for-the-badge)](https://marketplace.visualstudio.com/items?itemName=contextual-snips)

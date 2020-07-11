@@ -8,7 +8,7 @@
 		"vscode": "^1.22.0"
 	},
 	"repository": {
-		"url": "https://github.com/brpaz/contextual-snips"
+		"url": "https://github.com/brpaz/vscode-contextual-snips"
 	},
 	"categories": [
 		"Snippets"
