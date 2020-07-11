@@ -69,6 +69,10 @@ Ex:
 
 Note the `context` field. Here you can define a list of patterns where the snippet will be displayed as well as package related details.
 
+## TODO
+
+* had support for more Package Managers
+* Add some more test cases
 
 ## Contributing
 

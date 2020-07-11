@@ -1,4 +1,4 @@
-import { Snippet } from '../types';
+import { Snippet } from './types';
 import * as fg from 'fast-glob';
 import * as fs from 'fs-extra';
 import * as os from 'os';
@@ -41,12 +41,17 @@ export default class SnipptsLoader {
       for (const key of keys) {
         const data = fileContents[key];
         data['id'] = key;
+
+        if (data['scope'] == undefined) {
+          data['scope'] = 'plaintext';
+        }
+
         snippetData.push(data);
       }
 
       return snippetData;
     } catch (err) {
-      console.warn(`Cannot parse snippet file ${path} : ${err.message()}`);
+      console.warn(`Cannot parse snippet file ${path} : ${err.message}`);
     }
 
     return snippetData;

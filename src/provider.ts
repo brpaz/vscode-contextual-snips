@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import { Snippet, PackageProvider } from '../types';
+import { Snippet, PackageProvider } from './types';
 import * as pm from 'picomatch';
 import * as fs from 'fs-extra';
 import * as path from 'path';
