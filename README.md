@@ -40,7 +40,7 @@ To install the extension, open the command pallete and type: `ext install brpaz.
 
 After installing the extension, you must configure the paths where this extension will look for snippets.
 
-Open settings and set ```contextual-snips.snippets-path```.
+Open settings and set ```contextual-snips.snippets-paths```.
 
 You need to create your snippets in that path as json files.
 
