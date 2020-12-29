@@ -78,7 +78,7 @@
 		"@types/fs-extra": "^9.0.1",
 		"@types/glob": "^7.1.1",
 		"@types/jest": "^26.0.3",
-		"@types/memoizee": "^0.4.4",
+		"@types/memoizee": "^0.4.5",
 		"@types/mock-fs": "^4.10.0",
 		"@types/node": "^13.11.0",
 		"@types/picomatch": "^2.2.1",
