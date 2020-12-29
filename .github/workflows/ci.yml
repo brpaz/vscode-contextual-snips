@@ -15,10 +15,10 @@ jobs:
       - uses: actions/checkout@v2
       - run: yarn install
       - run: yarn lint
-      - run: yarn test:cover
-      - uses: codecov/codecov-action@v1
-        with:
-          file: ./coverage/clover.xml
+      - run: yarn test
+      # - uses: codecov/codecov-action@v1
+      #   with:
+      #     file: ./coverage/clover.xml
 
   release:
     needs: test
