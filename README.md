@@ -15,7 +15,7 @@
 
 ## Background
 
-Code snippets is a great way to improve coding speed. A problem that I found on VS Code is that the user have limited control, related to the criteria of display the snippets suggestions. The only filter you can do is by language.
+Code snippets are a great way to improve coding speed. A problem that I found on VS Code is that the user have limited control, related to the criteria of display the snippets suggestions. The only filter you can do is by language.
 
 This limitation can result in lots of noise, when we are dealing with many snippets, because the editor will provide snippet suggestions that are not applicable to the current context. 
 
