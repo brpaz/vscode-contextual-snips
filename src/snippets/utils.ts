@@ -1,7 +1,21 @@
 import os from 'os';
 import path from 'path';
-import { workspace } from 'vscode';
+import { window, workspace } from 'vscode';
 
+export function getProjectSnippetsPath(): string | undefined {
+  const activeEditor = window.activeTextEditor;
+  if (activeEditor === undefined) {
+    return;
+  }
+  const currentFile = activeEditor.document.uri;
+  const ws = workspace.getWorkspaceFolder(currentFile);
+
+  if (ws === undefined) {
+    return;
+  }
+
+  return path.join(ws.uri.fsPath, '.vscode', 'contextual-snippets');
+}
 /**
  * Returns the location of the Contextual Snippets.
  * It checks the extension confiugration first, if not defined, it falls back to the default in VSCode User Config folder.

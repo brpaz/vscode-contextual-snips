@@ -99,6 +99,8 @@ Very basic regex, it will match all files starting with `apiVersion`. You can of
 
 You can create your JSON files by hand ([Snippet Creator](https://snippet-generator.app/) is very useful to format the snippet correctly), or you can use the `Contextual Snippets: Create from selection` command or Editor context menu, to create a snippet from your current text selection. The extension will then prompt you for the snippet defails.
 
+This extension also supports project level snippets, by looking into `.vscode/contextual-snippets` folder.
+
 ## Contributing
 
 Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any contributions you make are **greatly appreciated**.

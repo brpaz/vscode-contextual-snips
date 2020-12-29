@@ -1,28 +1,48 @@
-import { window, commands, QuickPick } from 'vscode';
+import path from 'path';
+import { window, commands, QuickPickItem } from 'vscode';
 import { NewSnippet } from '../snippets/snippet';
+import { getSnippetsPath } from '../snippets/utils';
+
+import SnippetsManager from '../snippets/snippetsManager';
 import { PackageProviderType } from '../packageProvider/provider';
 import { COMMAND_REFRESH } from './index';
-import path from 'path';
-import SnippetsManager from '../snippets/snippetsManager';
+
+export interface SnippetFileQuickPick extends QuickPickItem {
+  label: string;
+  fullPath: string;
+}
 
 function getSnippetFile(snippetFiles: string[]): Promise<string> {
+  const items = snippetFiles
+    .map((f) => {
+      return {
+        label: path.basename(f),
+        fullPath: f,
+        description: f.includes('.vscode') ? 'Project Snippet' : 'Global Snippet'
+      } as SnippetFileQuickPick;
+    })
+    .sort();
+
   return new Promise((resolve) => {
     const quickPick = window.createQuickPick();
     quickPick.placeholder = 'Select (or create) the file where the new snippet will be saved.';
     quickPick.canSelectMany = false;
-    quickPick.items = snippetFiles.map((label) => ({ label }));
+    quickPick.items = items;
     quickPick.onDidAccept(() => {
-      const selection = quickPick.activeItems[0];
-      let value = selection.label;
-      if (!selection.label.endsWith('.json')) {
-        value = `${selection.label}.json`;
-      }
-      resolve(value);
+      const selection = quickPick.activeItems[0] as SnippetFileQuickPick;
+      resolve(selection.fullPath);
       quickPick.hide();
     });
     quickPick.onDidChangeValue(() => {
       if (!snippetFiles.includes(quickPick.value)) {
-        const newItems = [quickPick.value, ...snippetFiles].map((label) => ({ label: label }));
+        const value = quickPick.value.endsWith('.json') ? quickPick.value : `${quickPick.value}.json`;
+
+        const newValue = {
+          label: quickPick.value,
+          fullPath: path.join(getSnippetsPath(), value)
+        } as SnippetFileQuickPick;
+
+        const newItems = [newValue, ...items];
         quickPick.items = newItems;
       }
     });
@@ -78,8 +98,7 @@ export default async function (snippetsManager: SnippetsManager): Promise<void> 
 
   const snippetFiles = await snippetsManager.getSnippetsFiles();
 
-  const items = snippetFiles.map((f) => path.basename(f)).sort();
-  const targetFile = await getSnippetFile(items);
+  const targetFile = await getSnippetFile(snippetFiles);
 
   if (targetFile === undefined) {
     return;

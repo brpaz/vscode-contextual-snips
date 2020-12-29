@@ -1,9 +1,8 @@
 import { NewSnippet, Snippet, SnippetContext } from './snippet';
 import fg from 'fast-glob';
 import fs from 'fs-extra';
-import path from 'path';
 import { PackageProviderFactory } from '../packageProvider/provider';
-import { getActiveWorkspaceRootFolder } from '../utils/workspace';
+import { getProjectSnippetsPath } from '../snippets/utils';
 
 /**
  * Main class responsible for Managing the Snippets load and creation.
@@ -13,8 +12,8 @@ export default class SnippetsManager {
 
   private packageProviderFactory: PackageProviderFactory;
 
-  public constructor(snippetsPath: string, packageProviderFactory: PackageProviderFactory) {
-    this.snippetsDir = snippetsPath;
+  public constructor(snippetsDir: string, packageProviderFactory: PackageProviderFactory) {
+    this.snippetsDir = snippetsDir;
     this.packageProviderFactory = packageProviderFactory;
     this.ensureSnippetsDirExists();
   }
@@ -23,8 +22,8 @@ export default class SnippetsManager {
     return this.packageProviderFactory;
   }
 
-  public getDefaultSnippetsFilePath(): string {
-    return path.join(this.snippetsDir, 'global.json');
+  public getSnippetsDir(): string {
+    return this.snippetsDir;
   }
 
   private ensureSnippetsDirExists(): void {
@@ -69,7 +68,7 @@ export default class SnippetsManager {
 
     snippet.body = newSnippetData.body.split('\n');
 
-    const snippetFile = path.join(this.snippetsDir, newSnippetData.filePath);
+    const snippetFile = newSnippetData.filePath;
 
     if (!fs.existsSync(snippetFile)) {
       fs.writeJSONSync(snippetFile, {});
@@ -90,10 +89,8 @@ export default class SnippetsManager {
 
     const files = await fg(globalSnippetsPath);
 
-    const workspaceFolder = getActiveWorkspaceRootFolder();
-    if (workspaceFolder) {
-      const projectSnippetsPath = path.join(workspaceFolder.uri.fsPath, '.vscode', 'contextual-snippets');
-
+    const projectSnippetsPath = getProjectSnippetsPath();
+    if (projectSnippetsPath) {
       const projectFiles = await fg(`${projectSnippetsPath}/**/*.json`);
 
       files.push(...projectFiles);
