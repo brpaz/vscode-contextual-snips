@@ -9,8 +9,12 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/setup-node@v2
+        with:
+          node-version: "12"
       - uses: actions/checkout@v2
       - run: yarn install
+      - run: yarn lint
       - run: yarn test:cover
       - uses: codecov/codecov-action@v1
         with:
@@ -21,6 +25,9 @@ jobs:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/master'
     steps:
+      - uses: actions/setup-node@v2
+        with:
+          node-version: "12"
       - uses: actions/checkout@v2
       - run: yarn install
       - name: Semantic Release

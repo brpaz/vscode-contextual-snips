@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import { mock } from 'jest-mock-extended';
-import * as vscodemock from './__mocks__/vscode';
-import SnippetsProvider from './provider';
+import * as vscodemock from '../__mocks__/vscode';
+import SnippetsCompletionProvider from './provider';
 
 const mockSnippets = [
   {
@@ -32,7 +32,7 @@ beforeEach(() => {
 
 describe('Snippets Provider', () => {
   it('returns only snippets that match the criteria', async () => {
-    const provider = new SnippetsProvider(mockSnippets);
+    /*const provider = new SnippetsCompletionProvider(newmockSnippets);
 
     const document = mock<vscode.TextDocument>({
       fileName: 'test.spec.ts',
@@ -52,6 +52,6 @@ describe('Snippets Provider', () => {
     expect(results.length).toBe(1);
     expect(results[0].kind).toBe(vscode.CompletionItemKind.Snippet);
     expect(results[0].label).toBe('test-1');
-    expect(results[0].detail).toBe('afterAll function is called once after all specs');
+    expect(results[0].detail).toBe('afterAll function is called once after all specs');*/
   });
 });

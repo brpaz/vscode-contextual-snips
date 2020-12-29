@@ -1,22 +1,18 @@
 import * as vscode from 'vscode';
-import { Snippet, PackageProvider } from './types';
-import * as pm from 'picomatch';
-import * as fs from 'fs-extra';
-import * as path from 'path';
-import * as memoize from 'memoizee';
+import { Snippet } from '../snippets/snippet';
 
-export default class SnippetsProvider implements vscode.CompletionItemProvider {
+import * as pm from 'picomatch';
+
+import { PackageProviderFactory } from '../packageProvider/provider';
+
+export default class SnippetsCompletionProvider implements vscode.CompletionItemProvider {
+  private packageProviderFactory: PackageProviderFactory;
+
   private snippets: Array<Snippet> = new Array<Snippet>();
 
-  private hasNPMPackageFn: Function;
-
-  public constructor(snippets: Array<Snippet>) {
+  public constructor(packageProviderFactory: PackageProviderFactory, snippets: Array<Snippet>) {
     this.snippets = snippets;
-    this.hasNPMPackageFn = memoize(this.hasNPMPackage, {
-      maxAge: 15000,
-      primitive: true,
-      length: 2
-    });
+    this.packageProviderFactory = packageProviderFactory;
   }
 
   public setSnippets(snippets: Array<Snippet>): void {
@@ -34,11 +30,13 @@ export default class SnippetsProvider implements vscode.CompletionItemProvider {
     const filteredSnippets = this.snippets
       .filter((item) => this.filterByLanguage(item, document))
       .filter((item) => this.filterByPattern(item, document.uri.path, rootPath))
-      .filter((item) => this.filterByPackage(item, rootPath));
+      .filter((item) => this.filterByPackage(item, rootPath))
+      .filter((item) => this.filterByContent(item, document));
 
     const completionItems = filteredSnippets.map((snippet) => {
       const snippetCompletion = new vscode.CompletionItem(snippet.id, vscode.CompletionItemKind.Snippet);
       snippetCompletion.insertText = new vscode.SnippetString(snippet.body.join('\n'));
+      snippetCompletion.kind = vscode.CompletionItemKind.Snippet;
       snippetCompletion.detail = snippet.description;
       return snippetCompletion;
     });
@@ -69,29 +67,25 @@ export default class SnippetsProvider implements vscode.CompletionItemProvider {
       return true;
     }
 
-    const pkgInfo = snippet.context.package;
+    const pkgConfig = snippet.context.package;
 
-    if (pkgInfo.provider == PackageProvider.NPM) {
-      return this.hasNPMPackageFn(pkgInfo.name, rootPath);
-    }
+    const packageProvider = this.packageProviderFactory.getProviderByType(pkgConfig.provider);
 
-    return false;
-  }
-
-  private hasNPMPackage(pkgName: string, rootPath: string): boolean {
-    const pkgJSONPath = path.join(rootPath, 'package.json');
-    const pkgJsonExists = fs.existsSync(pkgJSONPath);
-
-    if (!pkgJsonExists) {
+    if (!packageProvider) {
       return false;
     }
 
-    const pkgData = fs.readJSONSync(pkgJSONPath);
+    return packageProvider.hasPackage(pkgConfig.name);
+  }
 
-    if (pkgData['devDependencies'][pkgName] || pkgData['devDependencies'][pkgName]) {
+  private filterByContent(snippet: Snippet, document: vscode.TextDocument): boolean {
+    const contentMatchRegex = snippet.context?.contentMatch;
+
+    if (!contentMatchRegex) {
       return true;
     }
 
-    return false;
+    const re = new RegExp(contentMatchRegex);
+    return re.test(document.getText());
   }
 }
