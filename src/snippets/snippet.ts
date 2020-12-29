@@ -1,3 +1,5 @@
+import { PackageProviderType } from '../packageProvider/provider';
+
 export interface Snippet {
   id: string;
   prefix: Array<string>;
@@ -10,17 +12,25 @@ export interface Snippet {
 export interface SnippetContext {
   patterns?: Array<string>;
   package?: Package;
-}
-
-export enum PackageProvider {
-  NPM = 'npm'
+  contentMatch?: string;
 }
 
 export interface Package {
-  provider: PackageProvider;
+  provider: PackageProviderType;
   name: string;
 }
 
 export interface SnippetsLoader {
   load(paths: Array<string>): Array<Snippet>;
+}
+
+export interface NewSnippet {
+  languageId: string;
+  prefix: string;
+  description: string;
+  body: string;
+  pattern: string;
+  filePath: string;
+  packageProvider?: PackageProviderType;
+  packageName?: string;
 }

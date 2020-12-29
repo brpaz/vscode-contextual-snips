@@ -1,33 +1,49 @@
-// The module 'vscode' contains the VS Code extensibility API
-// Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
-import SnippetsProvider from './provider';
-import SnippetsLoader from './loader';
-import { Snippet } from './types';
+import SnippetsCompletionProvider from './completionProvider/provider';
+import SnippetsManager from './snippets/snippetsManager';
+import openFolder from './commands/openFolder';
+import createSnippets from './commands/create';
+import editSnippets from './commands/editFile';
+import refreshSnippets from './commands/refresh';
+import { getSnippetsPath } from './snippets/utils';
 
-const snippetsLoader = new SnippetsLoader();
-
-async function loadSnippets(): Promise<Array<Snippet>> {
-  const snippetPaths = vscode.workspace.getConfiguration('contextual-snips').get('snippets-paths') as Array<string>;
-
-  return snippetsLoader.load(snippetPaths);
-}
+import { WorkspacePackageProviderFactory } from './packageProvider/provider';
+import {
+  COMMAND_REFRESH,
+  COMMAND_CREATE_SNIPPET,
+  COMMAND_OPEN_SNIPPETS_FOLDER,
+  COMMAND_EDIT_SNIPPET_FILE
+} from './commands';
 
 export async function activate(context: vscode.ExtensionContext): Promise<void> {
-  const snippets = await loadSnippets();
-  const contextualSnippetsProvider = new SnippetsProvider(snippets);
-  const provider = vscode.languages.registerCompletionItemProvider({ pattern: '**' }, contextualSnippetsProvider);
+  console.log(`Contextual Snippets: Extension Activated`);
 
-  context.subscriptions.push(provider);
+  const packagePrvoiderFactory = new WorkspacePackageProviderFactory();
+  const snippetsManager = new SnippetsManager(getSnippetsPath(), packagePrvoiderFactory);
+  const snippets = await snippetsManager.loadSnippets();
+  const contextualSnippetsProvider = new SnippetsCompletionProvider(packagePrvoiderFactory, snippets);
 
-  const refreshSnippetsCommand = vscode.commands.registerCommand('contextual-snips.refresh', async () => {
-    const snippets = await loadSnippets();
-    contextualSnippetsProvider.setSnippets(snippets);
+  context.subscriptions.push(
+    vscode.languages.registerCompletionItemProvider({ pattern: '**' }, contextualSnippetsProvider)
+  );
 
-    vscode.window.showInformationMessage('Snippets Refreshed Successfully!');
-  });
+  context.subscriptions.push(
+    vscode.commands.registerCommand(COMMAND_REFRESH, async () =>
+      refreshSnippets(snippetsManager, contextualSnippetsProvider)
+    )
+  );
 
-  context.subscriptions.push(refreshSnippetsCommand);
+  context.subscriptions.push(
+    vscode.commands.registerCommand(COMMAND_CREATE_SNIPPET, () => createSnippets(snippetsManager))
+  );
+
+  context.subscriptions.push(
+    vscode.commands.registerCommand(COMMAND_EDIT_SNIPPET_FILE, () => editSnippets(snippetsManager))
+  );
+
+  context.subscriptions.push(vscode.commands.registerCommand(COMMAND_OPEN_SNIPPETS_FOLDER, () => openFolder()));
 }
 
-export function deactivate(): void {}
+export function deactivate(): void {
+  console.log(`Contextual Snippets: Deactivate extension`);
+}

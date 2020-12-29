@@ -28,17 +28,38 @@
 			{
 				"command": "contextual-snips.refresh",
 				"title": "Contextual Snippets: Refresh Snippets"
+			},
+			{
+				"command": "contextual-snips.openSnippetsFolder",
+				"title": "Contextual Snippets: Open Snippets Folder"
+			},
+			{
+				"command": "contextual-snips.editSnippetFile",
+				"title": "Contextual Snippets: Edit Snippets File"
+			},
+			{
+				"command": "contextual-snips.createSnippet",
+				"title": "Contextual Snippets: Create From Selection"
 			}
 		],
 		"configuration": {
 			"title": "Contextual Snippets",
 			"properties": {
-				"contextual-snips.snippets-paths": {
-					"type": "array",
-					"default": [],
-					"description": "A list of folder paths to find Code snippets"
+				"contextual-snips.snippets-path": {
+					"type": "string",
+					"default": null,
+					"description": "Override the default snippets location."
 				}
 			}
+		},
+		"menus": {
+			"editor/context": [
+				{
+					"command": "contextual-snips.createSnippet",
+					"when": "editorHasSelection",
+					"group": "2_workspace"
+				}
+			]
 		}
 	},
 	"scripts": {
@@ -85,6 +106,7 @@
 		"fast-glob": "^3.2.4",
 		"fs-extra": "^9.0.1",
 		"memoizee": "^0.4.14",
+		"open": "^7.3.0",
 		"picomatch": "^2.2.2"
 	},
 	"release": {

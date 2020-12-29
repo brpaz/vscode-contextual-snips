@@ -1,5 +1,6 @@
-import * as mock from 'mock-fs';
-import SnippetsLoader from './loader';
+import mock from 'mock-fs';
+import { WorkspacePackageProviderFactory } from '../packageProvider/provider';
+import SnippetsManager from './snippetsManager';
 
 const testData = {
   testsnippet: {
@@ -18,10 +19,11 @@ const testData = {
   }
 };
 
-let loader: SnippetsLoader;
+let loader: SnippetsManager;
+
+const providerFactory = new WorkspacePackageProviderFactory();
 
 beforeEach(() => {
-  loader = new SnippetsLoader();
   mock({
     '/snippets': {
       'test.json': JSON.stringify(testData),
@@ -32,7 +34,8 @@ beforeEach(() => {
 
 describe('Snippets Loader', () => {
   it('loads snippet files', async () => {
-    const snippets = await loader.load(['/snippets']);
+    loader = new SnippetsManager('/snippets', providerFactory);
+    const snippets = await loader.loadSnippets();
     expect(snippets.length).toBe(2);
     expect(snippets[0].id).toBe('testsnippet');
     expect(snippets[0].prefix).toContain('snip');
@@ -42,18 +45,21 @@ describe('Snippets Loader', () => {
   });
 
   it('fallback to plaintext language if scope is not defined', async () => {
-    const snippets = await loader.load(['/snippets']);
+    loader = new SnippetsManager('/snippets', providerFactory);
+    const snippets = await loader.loadSnippets();
     expect(snippets[1].id).toBe('testsnippetwithoutscope');
     expect(snippets[1].scope).toBe('plaintext');
   });
 
   it('loads empty files if snippet folder was not found', async () => {
-    const snippets = await loader.load(['/not-existing-snippets']);
+    loader = new SnippetsManager('/snippets-not-found', providerFactory);
+    const snippets = await loader.loadSnippets();
     expect(snippets.length).toBe(0);
   });
 
   it('returns empty list if Snippet file is invalid', async () => {
-    const snippets = await loader.load(['/parseerror.json']);
+    loader = new SnippetsManager('/parseerror.json', providerFactory);
+    const snippets = await loader.loadSnippets();
     expect(snippets.length).toBe(0);
   });
 });

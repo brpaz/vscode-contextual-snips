@@ -1,6 +1,6 @@
 # Contextual Snippets Extension for VS Code
 
-> This extension provides an advanced way to control the display of custom snippet suggestions, (file pattern, presence of dependency, etc)
+> This extension provides a more advanced way to define Code Snippets in VS Code.
 
 [![CI Status](https://img.shields.io/github/workflow/status/brpaz/vscode-contextual-snips/CI?color=orange&label=actions&logo=github&logoColor=orange&style=for-the-badge)](https://github.com/brpaz/vscode-contextual-snips)
 [![Codecov Coverage](https://img.shields.io/codecov/c/github/brpaz/vscode-contextual-snips.svg?style=for-the-badge)](https://codecov.io/gh/brpaz/vscode-contextual-snips)
@@ -19,34 +19,44 @@ Code snippets is a great way to improve coding speed. A problem that I found on 
 
 This limitation can result in lots of noise, when we are dealing with many snippets, because the editor will provide snippet suggestions that are not applicable to the current context. 
 
-For example, for YAML files, if I am editing a "GitHub Action" workflow, I don´t want to see snippet suggestions for other YAML files, let´s say Kubernetes. 
-Even in the scope of a particular language, if am working on a Javascript application, but I am not using Jest for testing why should I see Jest related suggestions?
+For example, for YAML files, if I am editing a "GitHub Action" workflow, I don´t want to see snippet suggestions for other YAML files.
 
-This extension aims to help with these problems, but allowing you to define some more conditions for your snippets.
+Even in the scope of a particular language, if am working on a Javascript application, but I am not using Jest for testing, Jest suggestions would be not useful.
 
-## Features
-
-The following conditions are supported:
-
-* pattern: A glob pattern, that only the active file matches it, the snippet will be displayed.
-* npm package: Allow define that a snippet will only be displayed in a specific package is present in the project `package.json`.
-* support for more packages management to come. (PRs Welcome)
+This extension aims to help with these problems, by allowing you to define some more conditions for your snippets.
 
 ## Install
 
 To install the extension, open the command pallete and type: `ext install brpaz.contextual-snips`.
 
+## Features
+
+This extension works by extending the default VS Code snnippets format with a extra `context` property. You can use this property to define the rules, that this extension will use to match the snippets.
+
+The following options are available:
+
+* `pattern`: A glob pattern to match with the current file.
+* `package`: Allow define that a snippet will only be displayed in a specific package is present in the project. (For now `npm` and `composer` and `gommod` (expiremental) are supported).
+* `contentMatch`: A regex that will be matched against the entire text of the current opened file. Use it more more advanced use cases.
+
+
 ## Usage
 
-After installing the extension, you must configure the paths where this extension will look for snippets.
+By default, this extension will look for snippets on the VSCode User Folder.
 
-Open settings and set ```contextual-snips.snippets-path```.
+Depending on your platform, it is located at:
 
-You need to create your snippets in that path as json files.
+* **Windows** %APPDATA%\Code\User\contextual-snippets
+* **macOS** $HOME/Library/Application Support/Code/User/contextual-snippets
+* **Linux** $HOME/.config/Code/User/contextual-snippets
 
-The snippet format is similar to the VS Code format, but with some extra fields:
+You can override this location, by setting the  ```contextual-snips.snippets-path``` in the Settings.
 
-Ex:
+Then you need to create your snippets json files in that location. You can organize everything on a single file or create multiple files. Iy´s up to you and this extension doesn´t care.
+
+The snippet format is similar to the VS Code format, but with the extra `context` field as mentioned.
+
+For Example, to create Jest snippets, only for test files and with the Jest package installed, you could define your script as follows:
 
 ```json
 {
@@ -72,20 +82,46 @@ Ex:
     },
 ```
 
-Note the `context` field. Here you can define a list of patterns where the snippet will be displayed as well as package related details.
+A more advanced example, using `contentMatch`. Let´s say you want to enable a particular snippet only to YAML files containing Kubernetes definitions.
 
-## TODO
+You can write your `context` rules as follows:
 
-* had support for more Package Managers
-* Add some more test cases
+```json
+"context": {
+    "patterns": [
+    "**/**/*.yml"
+    ],
+    "contentMatch": "^apiVersion"
+},
+```
+
+Very basic regex, it will match all files starting with `apiVersion`. You can of course, write a lot more complex regexes.
+
+You can create your JSON files by hand ([Snippet Creator](https://snippet-generator.app/) is very useful to format the snippet correctly), or you can use the `Contextual Snippets: Create from selection` command or Editor context menu, to create a snippet from your current text selection. The extension will then prompt you for the snippet defails.
 
 ## Contributing
 
-All contributions are welcome. Just open an issue or PR!
+Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
-You must respect the [Contributor Convenant Code of conduct](https://www.contributor-covenant.org/version/1/4/code-of-conduct) when contributing to this project.
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-If you like my work, feel free to buy me a Coffee ;)
+
+## 💛 Support the project
+
+If this project was useful to you in some form, I would be glad to have your support.  It will help to keep the project alive and to have more time to work on Open Source.
+
+The sinplest form of support is to give a ⭐️ to this repo.
+
+You can also contribute with [GitHub Sponsors](https://github.com/sponsors/brpaz).
+
+[![GitHub Sponsors](https://img.shields.io/badge/GitHub%20Sponsors-Sponsor%20Me-red?style=for-the-badge)](https://github.com/sponsors/brpaz)
+
+
+Or if you prefer a one time donation to the project, you can simple:
 
 <a href="https://www.buymeacoffee.com/Z1Bu6asGV" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: auto !important;width: auto !important;" ></a>
 
