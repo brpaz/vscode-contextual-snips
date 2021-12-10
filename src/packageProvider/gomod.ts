@@ -5,7 +5,7 @@ import fs from 'fs-extra';
 import path from 'path';
 import memoize from 'memoizee';
 class Gomod implements PackageProvider {
-  private hasPackageFn: Function;
+  private hasPackageFn: (name: string) => boolean;
 
   constructor() {
     this.hasPackageFn = memoize(

@@ -5,7 +5,7 @@ import path from 'path';
 import memoize from 'memoizee';
 
 class Npm implements PackageProvider {
-  private hasPackageFn: Function;
+  private hasPackageFn: (name: string) => boolean;
 
   constructor() {
     this.hasPackageFn = memoize(

@@ -129,7 +129,7 @@ export default class SnippetsManager {
 
       return snippetData;
     } catch (err) {
-      console.warn(`Contextual Snippets: Cannot parse snippet file ${path} : ${err.message}`);
+      console.warn(`Contextual Snippets: Cannot parse snippet file ${path} : ${err}`);
     }
 
     return snippetData;

@@ -5,7 +5,7 @@ import { PackageProvider, PackageProviderType } from './provider';
 import { getActiveWorkspaceRootFolder } from '../utils/workspace';
 
 class Composer implements PackageProvider {
-  private hasPackageFn: Function;
+  private hasPackageFn: (name: string) => boolean;
 
   constructor() {
     this.hasPackageFn = memoize(

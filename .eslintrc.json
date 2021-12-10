@@ -5,7 +5,7 @@
     "ecmaVersion": 6,
     "sourceType": "module"
   },
-  "extends": ["plugin:@typescript-eslint/recommended", "prettier/@typescript-eslint", "plugin:prettier/recommended"],
+  "extends": ["plugin:@typescript-eslint/recommended", "prettier", "plugin:prettier/recommended"],
   "rules": {
     "@typescript-eslint/no-empty-function": "warn"
   }
