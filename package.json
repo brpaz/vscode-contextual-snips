@@ -92,7 +92,7 @@
 		"eslint-plugin-prettier": "^4.0.0",
 		"glob": "^7.2.0",
 		"husky": "^7.0.4",
-		"jest": "^27.4.4",
+		"jest": "^27.4.5",
 		"jest-mock-extended": "^2.0.4",
 		"lint-staged": "^12.1.2",
 		"mock-fs": "^5.1.2",
