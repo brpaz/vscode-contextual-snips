@@ -52,7 +52,7 @@ Depending on your platform, it is located at:
 
 You can override this location, by setting the  ```contextual-snips.snippets-path``` in the Settings.
 
-Then you need to create your snippets json files in that location. You can organize everything on a single file or create multiple files. Iy´s up to you and this extension doesn´t care.
+Then you need to create your snippets json files in that location. You can organize everything on a single file or create multiple files. It's really up to you and this extension doesn´t care.
 
 The snippet format is similar to the VS Code format, but with the extra `context` field as mentioned.
 
