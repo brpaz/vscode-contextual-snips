@@ -108,6 +108,7 @@
 	"dependencies": {
 		"fast-glob": "^3.2.11",
 		"fs-extra": "^10.1.0",
+		"kind-of": "^6.0.3",
 		"memoizee": "^0.4.15",
 		"open": "^8.4.0",
 		"picomatch": "^2.3.1",
