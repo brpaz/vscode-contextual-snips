@@ -1,5 +1,7 @@
 # Contextual Snippets Extension for VS Code
 
+:warning::warning:: **This extension has been deprecated in favour on [Advanced Snippets](https://github.com/brpaz/vscode-advanced-snippets)**:warning::warning:
+
 > This extension provides a more advanced way to define Code Snippets in VS Code.
 
 [![CI Status](https://img.shields.io/github/workflow/status/brpaz/vscode-contextual-snips/CI?color=orange&label=actions&logo=github&logoColor=orange&style=for-the-badge)](https://github.com/brpaz/vscode-contextual-snips)
